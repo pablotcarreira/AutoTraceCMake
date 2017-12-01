@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "autotrace", "autotrace.vcproj", "{E13CA74B-A192-4205-AEA0-5E945C269210}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E13CA74B-A192-4205-AEA0-5E945C269210}.Debug|Default.ActiveCfg = Debug|Win32
+		{E13CA74B-A192-4205-AEA0-5E945C269210}.Debug|Default.Build.0 = Debug|Win32
+		{E13CA74B-A192-4205-AEA0-5E945C269210}.Release|Default.ActiveCfg = Release|Win32
+		{E13CA74B-A192-4205-AEA0-5E945C269210}.Release|Default.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC8D9697-D545-4DF7-9C9C-08358E6F3EF8}
+	EndGlobalSection
+EndGlobal

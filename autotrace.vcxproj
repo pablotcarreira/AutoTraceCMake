@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E13CA74B-A192-4205-AEA0-5E945C269210}</ProjectGuid>
+    <SccProjectName />
+    <SccLocalPath />
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26919.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\autotrace___Win32_Release\</OutDir>
+    <IntDir>.\autotrace___Win32_Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\autotrace___Win32_Debug\</OutDir>
+    <IntDir>.\autotrace___Win32_Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\ImageMagick-5.3.4;C:\ming-0.2a;C:\pstoedit-3.32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_VISUALC_;NeedFunctionPrototypes;HAVE_MAGICK;AUTOTRACE_VERSION="0.31";HAVE_LIBSWF;inline=__inline;_MAGICKDLL_;AUTOTRACE_WEB="http://autotrace.sourceforge.net";HAVE_LIBPSTOEDIT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\autotrace___Win32_Release/autotraceexe.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\autotrace___Win32_Release/</AssemblerListingLocation>
+      <ObjectFileName>.\autotrace___Win32_Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\autotrace___Win32_Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>CORE_RL_magick_.lib;libming.lib;odbc32.lib;odbccp32.lib;pstoedit.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\autotrace___Win32_Release/autotrace.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\ImageMagick-5.3.4\VisualMagick\lib\;C:\ming-0.2a\Release;C:\pstoedit-3.32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>.\autotrace___Win32_Release/autotrace.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Midl>
+      <TypeLibraryName>.\autotrace___Win32_Release/autotrace.tlb</TypeLibraryName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\ImageMagick-5.3.4;C:\ming-0.2a;C:\pstoedit-3.32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_VISUALC_;NeedFunctionPrototypes;HAVE_MAGICK;AUTOTRACE_VERSION="0.30";HAVE_LIBSWF;inline=__inline;_MAGICKDLL_;AUTOTRACE_WEB="http://autotrace.sourceforge.net";HAVE_LIBPSTOEDIT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader />
+      <PrecompiledHeaderOutputFile>.\autotrace___Win32_Debug\autotrace.exe.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\autotrace___Win32_Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\autotrace___Win32_Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\autotrace___Win32_Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>CORE_DB_magick_.lib;libming.lib;odbc32.lib;odbccp32.lib;pstoedit.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\autotrace___Win32_Debug/autotrace.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\ImageMagick-5.3.4\VisualMagick\lib\;C:\ming-0.2a\Debug;C:\pstoedit-3.32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\autotrace___Win32_Debug/autotrace.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <Midl>
+      <TypeLibraryName>.\autotrace___Win32_Debug/autotrace.tlb</TypeLibraryName>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0407</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="atou.c" />
+    <ClCompile Include="autotrace.c" />
+    <ClCompile Include="bitmap.c" />
+    <ClCompile Include="color.c" />
+    <ClCompile Include="curve.c" />
+    <ClCompile Include="despeckle.c" />
+    <ClCompile Include="epsilon-equal.c" />
+    <ClCompile Include="exception.c" />
+    <ClCompile Include="filename.c" />
+    <ClCompile Include="fit.c" />
+    <ClCompile Include="getopt.c" />
+    <ClCompile Include="getopt1.c" />
+    <ClCompile Include="image-proc.c" />
+    <ClCompile Include="input-bmp.c" />
+    <ClCompile Include="input-magick.c" />
+    <ClCompile Include="input-pnm.c" />
+    <ClCompile Include="input-tga.c" />
+    <ClCompile Include="input.c" />
+    <ClCompile Include="logreport.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="median.c" />
+    <ClCompile Include="output-cgm.c" />
+    <ClCompile Include="output-dr2d.c" />
+    <ClCompile Include="output-dxf.c" />
+    <ClCompile Include="output-emf.c" />
+    <ClCompile Include="output-epd.c" />
+    <ClCompile Include="output-eps.c" />
+    <ClCompile Include="output-er.c" />
+    <ClCompile Include="output-fig.c" />
+    <ClCompile Include="output-mif.c" />
+    <ClCompile Include="output-p2e.c" />
+    <ClCompile Include="output-pdf.c" />
+    <ClCompile Include="output-sk.c" />
+    <ClCompile Include="output-svg.c" />
+    <ClCompile Include="output.c" />
+    <ClCompile Include="pxl-outline.c" />
+    <ClCompile Include="spline.c" />
+    <ClCompile Include="strgicmp.c" />
+    <ClCompile Include="thin-image.c" />
+    <ClCompile Include="vector.c" />
+    <ClCompile Include="xstd.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="atou.h" />
+    <ClInclude Include="autotrace.h" />
+    <ClInclude Include="bitmap.h" />
+    <ClInclude Include="cmdline.h" />
+    <ClInclude Include="color.h" />
+    <ClInclude Include="curve.h" />
+    <ClInclude Include="despeckle.h" />
+    <ClInclude Include="epsilon-equal.h" />
+    <ClInclude Include="exception.h" />
+    <ClInclude Include="filename.h" />
+    <ClInclude Include="fit.h" />
+    <ClInclude Include="getopt.h" />
+    <ClInclude Include="image-header.h" />
+    <ClInclude Include="image-proc.h" />
+    <ClInclude Include="input-bmp.h" />
+    <ClInclude Include="input-magick.h" />
+    <ClInclude Include="input-pnm.h" />
+    <ClInclude Include="input-tga.h" />
+    <ClInclude Include="input.h" />
+    <ClInclude Include="logreport.h" />
+    <ClInclude Include="message.h" />
+    <ClInclude Include="output-cgm.h" />
+    <ClInclude Include="output-dr2d.h" />
+    <ClInclude Include="output-dxf.h" />
+    <ClInclude Include="output-emf.h" />
+    <ClInclude Include="output-epd.h" />
+    <ClInclude Include="output-eps.h" />
+    <ClInclude Include="output-er.h" />
+    <ClInclude Include="output-fig.h" />
+    <ClInclude Include="output-mif.h" />
+    <ClInclude Include="output-p2e.h" />
+    <ClInclude Include="output-pdf.h" />
+    <ClInclude Include="output-sk.h" />
+    <ClInclude Include="output-svg.h" />
+    <ClInclude Include="output.h" />
+    <ClInclude Include="ptypes.h" />
+    <ClInclude Include="pxl-outline.h" />
+    <ClInclude Include="quantize.h" />
+    <ClInclude Include="spline.h" />
+    <ClInclude Include="strgicmp.h" />
+    <ClInclude Include="thin-image.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="vector.h" />
+    <ClInclude Include="xstd.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
