@@ -17,6 +17,9 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
    USA. */
 
+
+#undef HAVE_MAGICK
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif /* Def: HAVE_CONFIG_H */
@@ -26,20 +29,10 @@
 #include "input-pnm.h"
 #include "input-bmp.h"
 #include "input-tga.h"
-#ifdef HAVE_LIBPNG
-#include "input-png.h"
-#endif /* HAVE_LIBPNG */
-
-#if HAVE_MAGICK
-    #include <sys/types.h> /* Needed for correct interpretation of magick/api.h */
-    #include <magick/api.h>
-    #include "input-magick.h"
-#endif /* HAVE_MAGICK */
-
 #include "xstd.h"
 #include "filename.h"
 #include "strgicmp.h"
-#include <string.h>
+
 
 struct input_format_entry {
   const char * name;
@@ -48,10 +41,8 @@ struct input_format_entry {
 };
 
 #define END   {NULL, NULL, NULL}
+
 static struct input_format_entry input_formats[] = {
-#ifdef HAVE_LIBPNG
-  { "PNG",   "Portable network graphics",      input_png_reader},
-#endif /* HAVE_LIBPNG */
   { "TGA",   "Truevision Targa image",         input_tga_reader },
   { "PBM",   "Portable bitmap format",         input_pnm_reader },
   { "PNM",   "Portable anymap format",         input_pnm_reader },
@@ -86,11 +77,7 @@ at_input_get_handler_by_suffix (at_string suffix)
           return format->reader;
         }
     }
-#if HAVE_MAGICK
-  return (at_input_read_func)input_magick_reader;
-#else
   return NULL;
-#endif /* HAVE_MAGICK */
 }
 
 char **
@@ -99,47 +86,12 @@ at_input_list_new (void)
   char ** list;
   int count, count_int = 0;
   int i;
-#if HAVE_MAGICK
-  ExceptionInfo exception;
-#if (MagickLibVersion < 0x0540)
-  MagickInfo *info, *magickinfo;
-#else
-  const MagickInfo *info, *magickinfo;
-#endif
-#endif
+
 
   struct input_format_entry * entry;
   for (entry = input_formats; entry->name; entry++)
     count_int++;
-#if HAVE_MAGICK
-#if (MagickLibVersion < 0x0538)
-  MagickIncarnate("");
-#else
-  InitializeMagick("");
-#endif
-  GetExceptionInfo(&exception);
-#if (MagickLibVersion < 0x0534)
-  magickinfo = info = GetMagickInfo(NULL);
-#else
-  info = GetMagickInfo(NULL, &exception);
-  if (info && !info->next)
-    info = GetMagickInfo("*", &exception);
-  magickinfo = info;
-#endif
-#endif
   count = count_int;
-#if HAVE_MAGICK
-  while (info)
-    {
-#if (MagickLibVersion < 0x0537)
-      if (info->tag && info->description)
-#else
-      if (info->name && info->description)
-#endif
-        count ++;
-      info = info->next ;
-    }
-#endif
 
   XMALLOC(list, sizeof(char*)*((2*count)+1));
 
@@ -150,28 +102,6 @@ at_input_list_new (void)
       list[2*i+1] = (char *)entry[i].descr;
     }
 
-#if HAVE_MAGICK
-  info = magickinfo;
-
-  while (info)
-    {
-#if (MagickLibVersion < 0x0537)
-      if (info->tag && info->description)
-#else
-      if (info->name && info->description)
-#endif
-        {
-#if (MagickLibVersion < 0x0537)
-          list[2*i] = info->tag;
-#else
-          list[2*i] = info->name;
-#endif
-          list[2*i+1] = info->description;
-          i++;
-        }
-      info = info->next ;
-    }
-#endif
   list[2*i] = NULL;
   return list;
 }
@@ -189,14 +119,7 @@ at_input_shortlist (void)
   int count_int = 0;
   size_t length = 0;
   int i;
-#if HAVE_MAGICK
-  ExceptionInfo exception;
-#if (MagickLibVersion < 0x0540)
-  MagickInfo *info, *magickinfo;
-#else
-  const MagickInfo *info, *magickinfo;
-#endif
-#endif
+
 
   struct input_format_entry * entry;
   for (entry = input_formats; entry->name; entry++)
@@ -205,37 +128,6 @@ at_input_shortlist (void)
       length += strlen (entry->name) + 2;
   }
 
-#if HAVE_MAGICK
-#if (MagickLibVersion < 0x0538)
-  MagickIncarnate("");
-#else
-  InitializeMagick("");
-#endif
-  GetExceptionInfo(&exception);
-#if (MagickLibVersion < 0x0534)
-  magickinfo = info = GetMagickInfo(NULL);
-#else
-  magickinfo = info = GetMagickInfo(NULL, &exception);
-#endif
-#endif
-#if HAVE_MAGICK
-  while (info)
-    {
-#if (MagickLibVersion < 0x0537)
-      if (info->tag && info->description)
-#else
-      if (info->name && info->description)
-#endif
-        {
-#if (MagickLibVersion < 0x0537)
-          length += strlen (info->tag) + 2;
-#else
-          length += strlen (info->name) + 2;
-#endif
-        }
-      info = info->next ;
-    }
-#endif
 
   XMALLOC(list, sizeof (char) * (length + 1 + 2));
 
@@ -246,26 +138,7 @@ at_input_shortlist (void)
       strcat (list, ", ");
       strcat (list, (char *) entry[i].name);
     }
-#if HAVE_MAGICK
-  info = magickinfo;
-  while (info)
-    {
-#if (MagickLibVersion < 0x0537)
-      if (info->tag && info->description)
-#else
-      if (info->name && info->description)
-#endif
-        {
-          strcat (list, ", ");
-#if (MagickLibVersion < 0x0537)
-          strcat (list, info->tag);
-#else
-          strcat (list, info->name);
-#endif
-        }
-      info = info->next ;
-    }
-#endif
+
   strcat (list, " or ");
   strcat (list, (char *) entry[i].name);
   return list;

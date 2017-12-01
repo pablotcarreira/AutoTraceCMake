@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
+
+
+
 ################### Variables. ####################
 # Change if you want modify path or other values. #
 ###################################################
@@ -69,14 +72,10 @@ add_definitions(
    -D_DEBUG 
    -D_WINDOWS 
    -D_VISUALC_ 
-   -DNeedFunctionPrototypes 
-   -DHAVE_MAGICK 
-   -DAUTOTRACE_VERSION="0.31" 
-   -DHAVE_LIBSWF 
-   -Dinline=__inline 
-   -D_MAGICKDLL_ 
-   -DAUTOTRACE_WEB="http://autotrace.sourceforge.net" 
-   -DHAVE_LIBPSTOEDIT 
+   -DNeedFunctionPrototypes
+   -DAUTOTRACE_VERSION="0.31"
+   -Dinline=__inline
+   -DAUTOTRACE_WEB="http://autotrace.sourceforge.net"
 )
 
 ############## Artefacts Output #################
@@ -163,5 +162,8 @@ add_executable(${PROJECT_NAME}
 )
 
 if(MSVC)
-   target_link_libraries(${PROJECT_NAME} CORE_RL_magick_.lib libming.lib odbc32.lib odbccp32.lib pstoedit.lib )
+   target_link_libraries(${PROJECT_NAME} CORE_RL_magick_.lib libming.lib odbc32.lib odbccp32.lib )
 endif(MSVC)
+
+# Bibliotecas
+target_link_libraries(AutoGeoTrace m)

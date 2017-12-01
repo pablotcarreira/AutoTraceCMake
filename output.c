@@ -17,21 +17,10 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
    USA. */
 
-#include "config.h"
-
-#undef AUTOTRACE_VERSION
-#undef AUTOTRACE_WEB
-#undef HAVE_LIBPNG
-#undef HAVE_LIBSWF
-#undef HAVE_MAGICK
-#undef HAVE_LIBPSTOEDIT
-#undef HAVE_MKSTEMP
-
 #include "output.h"
 #include "xstd.h"
 #include "filename.h"
 #include "strgicmp.h"
-#include <string.h>
 
 #include "output-eps.h"
 #include "output-er.h"
@@ -63,9 +52,6 @@ static struct output_format_entry output_formats[] = {
     {"sk",	"Sketch",			output_sk_writer},
     {"svg",	"Scalable Vector Graphics",	output_svg_writer},
     {"fig",     "XFIG 3.2",                     output_fig_writer},
-#ifdef HAVE_LIBSWF
-  //  {"swf",	"Shockwave Flash 3",		output_swf_writer},
-#endif /* HAVE_LIBSWF */
     {"emf",     "Enhanced Metafile format",     output_emf_writer},
     {"mif",     "FrameMaker MIF format",        output_mif_writer},
     {"er",      "Elastic Reality Shape file",   output_er_writer},
@@ -77,10 +63,6 @@ static struct output_format_entry output_formats[] = {
     END
 };
 
-#if HAVE_LIBPSTOEDIT
-static at_bool output_is_static_member (struct output_format_entry * entries,
-					struct DriverDescription_S* dd);
-#endif /* HAVE_LIBPSTOEDIT */
 
 static at_bool streq (const char * a, const char * b);
 
@@ -109,11 +91,8 @@ at_output_get_handler_by_suffix(at_string suffix)
           return format->writer;
         }
     }
-#if HAVE_LIBPSTOEDIT
-  return output_pstoedit_get_writer(suffix);
-#else
   return NULL;
-#endif /* HAVE_LIBPSTOEDIT */
+
 }
 
 char **
@@ -124,38 +103,13 @@ at_output_list_new (void)
   int i;
 
   struct output_format_entry * entry;
-#if HAVE_LIBPSTOEDIT
-  struct DriverDescription_S* driver_description;
-#endif /* HAVE_LIBPSTOEDIT */
+
   
   for (entry = output_formats; entry->name; entry++)
     count_out++;
 
   count = count_out;
-#if HAVE_LIBPSTOEDIT
- {
-   struct DriverDescription_S* dd_tmp;
-   pstoedit_checkversion(pstoeditdllversion);
-   driver_description = getPstoeditDriverInfo_plainC();
-   if (driver_description)
-     {
-       dd_tmp = driver_description;
-       while (dd_tmp->symbolicname)
-	 {
-	   if (!output_is_static_member(output_formats,
-					dd_tmp)
-	       && !output_pstoedit_is_unusable_writer(dd_tmp->suffix))
-	     {
-	       if (streq(dd_tmp->symbolicname, dd_tmp->suffix))
-		 count += 1;
-	       else
-		 count += 2;
-	     }
-	   dd_tmp++;
-	 }
-     }
- }
-#endif /* HAVE_LIBPSTOEDIT */  
+
   
   XMALLOC(list, sizeof(char*)*((2*count)+1));
 
@@ -165,27 +119,7 @@ at_output_list_new (void)
       list[2*i] = (char *)entry[i].name;
       list[2*i+1] = (char *)entry[i].descr;
     }
-#if HAVE_LIBPSTOEDIT
-  while (driver_description->symbolicname)
-    {
-      if (!output_is_static_member(output_formats,
-				   driver_description)
-	  && !output_pstoedit_is_unusable_writer(driver_description->suffix))
-	{
-	  list[2*i]   = driver_description->suffix;
-	  list[2*i+1] = driver_description->explanation;
-	  i++;
-	  if (!streq(driver_description->suffix,
-		     driver_description->symbolicname))
-	    {
-	      list[2*i]   = driver_description->symbolicname;
-	      list[2*i+1] = driver_description->explanation;
-	      i++;
-	    }
-	}
-      driver_description++;
-    }
-#endif /* HAVE_LIBPSTOEDIT */  
+
   list[2*i] = NULL;
   return list;
 }
@@ -205,10 +139,6 @@ at_output_shortlist (void)
   int i;
 
   struct output_format_entry * entry;
-#if HAVE_LIBPSTOEDIT
-  struct DriverDescription_S* driver_description;
-  struct DriverDescription_S* dd_tmp;
-#endif /* HAVE_LIBPSTOEDIT */
 
   for (entry = output_formats; entry->name; entry++)
     {
@@ -216,28 +146,7 @@ at_output_shortlist (void)
       length += strlen (entry->name) + 2;
     }
 
-#if HAVE_LIBPSTOEDIT
- {
-   pstoedit_checkversion(pstoeditdllversion);
-   driver_description = getPstoeditDriverInfo_plainC();
-   if (driver_description)
-     {
-       dd_tmp = driver_description;
-       while (dd_tmp->symbolicname)
-	 {
-	   if (!output_is_static_member(output_formats,
-					dd_tmp)
-	       && !output_pstoedit_is_unusable_writer(dd_tmp->suffix))
-	     {
-	       length += strlen (dd_tmp->suffix) + 2;
-	       if (!streq(dd_tmp->suffix, dd_tmp->symbolicname))
-		 length += strlen (dd_tmp->symbolicname) + 2;
-	     }
-	   dd_tmp++;
-	 }
-     }
- }
-#endif /* HAVE_LIBPSTOEDIT */  
+
   
   XMALLOC(list, sizeof (char) * (length + 1 + 2));
 
@@ -248,28 +157,7 @@ at_output_shortlist (void)
       strcat (list, ", ");
       strcat (list, (char *) entry[i].name);
     }
-#if HAVE_LIBPSTOEDIT
-  dd_tmp = driver_description;
-  while (dd_tmp->symbolicname)
-    {
 
-      if (!output_is_static_member(output_formats,
-				   dd_tmp)
-	  && !output_pstoedit_is_unusable_writer(dd_tmp->suffix))
-	{
-	  strcat (list, ", ");
-	  strcat (list, dd_tmp->suffix);
-	  if (!streq(dd_tmp->suffix, 
-		     dd_tmp->symbolicname))
-	    {
-	      strcat (list, ", ");
-	      strcat (list, dd_tmp->symbolicname);
-	    }
-	}
-      dd_tmp++;
-    }
-  free(driver_description);
-#endif /* HAVE_LIBPSTOEDIT */
   strcat (list, " or ");
   strcat (list, (char *) entry[i].name);
   return list;
@@ -307,22 +195,6 @@ at_spline_list_array_foreach (at_spline_list_array_type *list_array,
       func (list_array, AT_SPLINE_LIST_ARRAY_ELT(list_array, i), i, user_data);
     }
 }
-
-#if HAVE_LIBPSTOEDIT 
-static at_bool
-output_is_static_member (struct output_format_entry * entries,
-			 struct DriverDescription_S* dd)
-{
-  while (entries->name)
-    {
-      if (streq(dd->suffix, entries->name)
-	  || streq(dd->symbolicname, entries->name))
-	return true;
-      entries++;
-    }
-  return false;
-}
-#endif /* HAVE_LIBPSTOEDIT */
 
 static at_bool
 streq (const char * a, const char * b)
